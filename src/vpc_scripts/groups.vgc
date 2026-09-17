@@ -4,9 +4,9 @@
 //	Group Configurations for all Source(TM) Projects
 //-----------------------------------------------------------------------------
 
-///////////////////////
+/////////////////////
 // Group definitions //
-///////////////////////
+/////////////////////
 
 $Group "gamedlls"
 {
@@ -17,19 +17,17 @@ $Group "gamedlls"
 $Group "game"
 {
 	"client"
-	"launcher_main"
 	"mathlib"
-	"matsys_controls"
 	"raytrace"
 	"server"
 	"tier1"
 	"vgui_controls"
+	"matsys_controls"
 }
 
 $Group "shaders"
 {
-	"game_shader_generic_example"
-	//"game_shader_generic_std"
+	"game_shader_dx9"
 }
 
 $Group "everything"
@@ -37,11 +35,10 @@ $Group "everything"
 	"captioncompiler"
 	"client"
 	"fgdlib"
+	"game_shader_dx9"
 	"glview"
 	"height2normal"
-	"launcher_main"
 	"mathlib"
-	"matsys_controls"
 	"motionmapper"
 	"phonemeextractor"
 	"qc_eyes"
@@ -52,6 +49,7 @@ $Group "everything"
 	"tier1"
 	"vbsp"
 	"vgui_controls"
+	"matsys_controls"
 	"vice"
 	"vrad_dll"
 	"vrad_launcher"
@@ -59,12 +57,6 @@ $Group "everything"
 	"vtfdiff"
 	"vvis_dll"
 	"vvis_launcher"
-
-	"game_shader_generic_example"
-
-	// You probably don't want to override all shaders by default.
-	// This is just an example mainly! Pick and choose what you want from this project. :D
-	//"game_shader_generic_std"
 }
 
 $Group "dedicated"
@@ -73,4 +65,3 @@ $Group "dedicated"
 	"server"
 	"tier1"
 }
-

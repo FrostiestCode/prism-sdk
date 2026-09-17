@@ -1,0 +1,1 @@
+devtools\bin\vpc.exe /hl2 /episodic /define:SOURCESDK +game /mksln games.sln
