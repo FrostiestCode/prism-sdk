@@ -45,6 +45,7 @@
 #include "vguicenterprint.h"
 #include "iviewrender_beams.h"
 #include "tier0/vprof.h"
+#include "tier0/dbg.h"
 #include "engine/IEngineTrace.h"
 #include "engine/ivmodelinfo.h"
 #include "physics.h"
@@ -507,6 +508,10 @@ static CHLVoiceStatusHelper g_VoiceStatusHelper;
 //-----------------------------------------------------------------------------
 
 ConVar cl_ShowBoneSetupEnts( "cl_ShowBoneSetupEnts", "0", 0, "Show which entities are having their bones setup each frame." );
+
+// Enables the game-side texture streaming integration. When enabled, texture
+// streaming is suspended during level load and resumed once loading completes.
+ConVar cl_texture_streaming( "cl_texture_streaming", "1", FCVAR_ARCHIVE, "Enable texture streaming integration during level loads." );
 
 class CBoneSetupEnt
 {
@@ -1611,6 +1616,15 @@ void CHLClient::LevelInitPreEntity( char const* pMapName )
 		return;
 	g_bLevelInitialized = true;
 
+	// Suspend texture streaming while the level loads so the engine doesn't
+	// attempt to stream textures in at full resolution in response to transient
+	// usage during precaching/loading. Streaming is resumed in LevelInitPostEntity.
+	if ( materials && cl_texture_streaming.GetBool() )
+	{
+		DevMsg( 1, "Texture streaming suspended for level load.\\n" );
+		materials->SuspendTextureStreaming();
+	}
+
 	input->LevelInit();
 
 	vieweffects->LevelInit();
@@ -1684,6 +1698,14 @@ void CHLClient::LevelInitPostEntity( )
 	IGameSystem::LevelInitPostEntityAllSystems();
 	C_PhysPropClientside::RecreateAll();
 	internalCenterPrint->Clear();
+
+	// Level loading is complete; allow the material system to resume streaming
+	// textures in at full resolution in response to usage again.
+	if ( materials && cl_texture_streaming.GetBool() )
+	{
+		DevMsg( 1, "Texture streaming resumed after level load.\\n" );
+		materials->ResumeTextureStreaming();
+	}
 }
 
 //-----------------------------------------------------------------------------
