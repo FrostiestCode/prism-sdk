@@ -9,7 +9,7 @@
 
 	FileSystem
 	{
-		SteamAppId				243730		// This sets the app ID in Steam
+		SteamAppId				243750		// This sets the app ID in Steam
 		
 		//
 		// The code that loads this file automatically does a few things here:
